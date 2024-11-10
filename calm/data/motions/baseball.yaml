@@ -1,0 +1,4 @@
+motions:
+ - file: "h_t_action_baseball.npy"
+   weight: 1
+   text: "pass"

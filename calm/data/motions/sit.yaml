@@ -1,0 +1,4 @@
+motions:
+ - file: "/home/cjm/CALM/calm/data/motions/target_height_motions/h_t_Mma_Kick.npy"
+   weight: 1
+   text: "sit"
