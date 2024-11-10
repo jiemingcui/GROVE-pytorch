@@ -185,94 +185,7 @@ class SpecAnyskillAgent(common_agent.CommonAgent):
             obs, aux_rewards, curr_dones, infos = self.vec_env.step(llc_actions) # 223d update actions
 
             if self.LLM:
-                # # ==================  arm across the chest  ==================
-                # body_pos = infos['state_embeds'][:, :15, :3]  # [num, 15, 3]
-                # body_rot = infos['state_embeds'][:, :15, 3:7]  # [num, 15, 4]
-                # body_vel = infos['state_embeds'][:, :15, 7:10]  # [num, 15, 3]
-                # body_ang_vel = infos['state_embeds'][:, :15, 10:13]  # [num, 15, 3]
-                #
-                # # Extract positions
-                # torso_pos = body_pos[:, 1, :]  # "torso" is at index 1
-                # left_hand_pos = body_pos[:, 8, :]  # "left_hand" is at index 8
-                # right_hand_pos = body_pos[:, 5, :]  # "right_hand" is at index 5
-                #
-                # # Compute distances to torso
-                # left_hand_to_torso_dist = torch.norm(left_hand_pos - torso_pos, dim=1)
-                # right_hand_to_torso_dist = torch.norm(right_hand_pos - torso_pos, dim=1)
-                #
-                # # Compute distance between hands
-                # hands_distance = torch.norm(left_hand_pos - right_hand_pos, dim=1)
-                #
-                # # Temperature parameters for transformations
-                # temp_hand_torso = 0.2
-                # temp_hands = 0.2
-                #
-                # # Compute reward components using exponential decay based on distances
-                # left_hand_reward = torch.exp(-left_hand_to_torso_dist / temp_hand_torso)
-                # right_hand_reward = torch.exp(-right_hand_to_torso_dist / temp_hand_torso)
-                # hands_proximity_reward = torch.exp(-hands_distance / temp_hands)
-                #
-                # # Total reward is the average of the three components
-                # llm_rewards = (left_hand_reward + right_hand_reward + hands_proximity_reward) / 3.0
-                #
-                # # Dictionary of individual reward components
-                # llm_reward_components = {
-                #     'left_hand_reward': left_hand_reward,
-                #     'right_hand_reward': right_hand_reward,
-                #     'hands_proximity_reward': hands_proximity_reward
-                # }
-
-                # # ================== playing suona ==================
-                # body_pos = infos['state_embeds'][:, :15, :3]  # [num, 15, 3]
-                # body_rot = infos['state_embeds'][:, :15, 3:7]  # [num, 15, 4]
-                # body_vel = infos['state_embeds'][:, :15, 7:10]  # [num, 15, 3]
-                # body_ang_vel = infos['state_embeds'][:, :15, 10:13]  # [num, 15, 3]
-                #
-                # # Extract hand positions
-                # left_hand_pos = body_pos[:, 8, :]  # left_hand
-                # right_hand_pos = body_pos[:, 5, :]  # right_hand
-                #
-                # # Compute hand distance
-                # hand_vector = left_hand_pos - right_hand_pos  # [num, 3]
-                # hand_distance = torch.norm(hand_vector, dim=1)  # [num]
-                #
-                # # Compute pelvis position
-                # pelvis_pos = body_pos[:, 0, :]  # pelvis
-                #
-                # # Compute hands relative to pelvis
-                # left_hand_pos_rel = left_hand_pos - pelvis_pos  # [num, 3]
-                # right_hand_pos_rel = right_hand_pos - pelvis_pos  # [num, 3]
-                #
-                # # Assume forward direction is along the z-axis
-                # forward_direction = torch.tensor([0.0, 1.0, 0.0], device=pelvis_pos.device)
-                #
-                # # Compute dot product with forward direction
-                # left_hand_forward = torch.sum(left_hand_pos_rel * forward_direction, dim=1)  # [num]
-                # right_hand_forward = torch.sum(right_hand_pos_rel * forward_direction, dim=1)  # [num]
-                #
-                # # Hands in front of body mask
-                # hands_in_front = ((left_hand_forward > 0) & (right_hand_forward > 0)).float()  # [num]
-                #
-                # # Temperature parameter
-                # temperature = 0.1
-                #
-                # # Desired minimal hand distance (embracing)
-                # desired_distance = 0.1  # meters
-                #
-                # # Compute reward for bringing hands together in front of the body
-                # reward_embrace = torch.exp(
-                #     -torch.abs(hand_distance - desired_distance) / temperature) * hands_in_front  # [num]
-                #
-                # # Compute reward for spreading arms (hands far apart)
-                # max_hand_distance = 1.0  # meters
-                # reward_spread = torch.exp(
-                #     -torch.abs(hand_distance - max_hand_distance) / temperature) * hands_in_front  # [num]
-                #
-                # # Combine rewards to encourage spreading then embracing
-                # llm_rewards = reward_spread + reward_embrace
-
-
-                # #  ================== ballet ==================
+                # #  ================== walk like model ==================
                 # body_pos = infos['state_embeds'][:, :15, :3]  # [num, 15, 3]
                 # body_rot = infos['state_embeds'][:, :15, 3:7]  # [num, 15, 4]
                 # body_vel = infos['state_embeds'][:, :15, 7:10]  # [num, 15, 3]
@@ -387,90 +300,6 @@ class SpecAnyskillAgent(common_agent.CommonAgent):
                 # # Total reward
                 # llm_rewards = reward_arms + reward_stand_on_one_leg + reward_lifted_leg_straight + reward_foot_lift
 
-
-                # # ==================  C shape  ==================
-                # body_pos = infos['state_embeds'][:, :15, :3]  # [num, 15, 3]
-                # body_rot = infos['state_embeds'][:, :15, 3:7]  # [num, 15, 4]
-                # body_vel = infos['state_embeds'][:, :15, 7:10]  # [num, 15, 3]
-                # body_ang_vel = infos['state_embeds'][:, :15, 10:13]  # [num, 15, 3]
-                #
-                # # Pelvis and torso lean to the left (negative y-axis lean)
-                # pelvis_pos, pelvis_rot, pelvis_vel, pelvis_ang_vel = body_pos[:, 0, :], body_rot[:, 0, :], body_vel[
-                #                                                                                            :, 0,
-                #                                                                                            :], body_ang_vel[
-                #                                                                                                :, 0,
-                #                                                                                                :]
-                # torso_pos, torso_rot, torso_vel, torso_ang_vel = body_pos[:, 1, :], body_rot[:, 1, :], body_vel[:,
-                #                                                                                        1,
-                #                                                                                        :], body_ang_vel[
-                #                                                                                            :, 1, :]
-                #
-                # # Encourage leftward lean in the pelvis and torso
-                # left_lean_pelvis_reward = torch.relu(-pelvis_pos[:, 1])  # Negative y indicates left lean
-                # left_lean_torso_reward = torch.relu(-torso_pos[:, 1])  # Encourage left lean in the torso as well
-                #
-                # # Right leg kick height and side distance
-                # right_thigh_pos = body_pos[:, 9, :]
-                # right_shin_pos = body_pos[:, 10, :]
-                # right_foot_pos = body_pos[:, 11, :]
-                #
-                # kick_height_reward = torch.relu(right_foot_pos[:, 2])  # High kick in z-axis
-                # # kick_height_reward = torch.relu(right_foot_pos[:, 2] - pelvis_pos[:, 2])  # High kick in z-axis
-                # kick_side_reward = torch.abs(right_foot_pos[:, 1])  # Sideward kick in y-axis
-                # # kick_side_reward = torch.abs(right_foot_pos[:, 1] - pelvis_pos[:, 1])  # Sideward kick in y-axis
-                #
-                # # Normalize kick height and side reward
-                # height_temp = 0.5
-                # side_temp = 0.5
-                # normalized_kick_height_reward = torch.exp(kick_height_reward / height_temp) - 1.0
-                # normalized_kick_side_reward = torch.exp(kick_side_reward / side_temp) - 1.0
-                #
-                # # Smooth motion (penalize jerky movements in kicking leg)
-                # right_leg_ang_vel = body_ang_vel[:, 9:12, :]  # Right thigh, shin, and foot
-                # smooth_motion_penalty = torch.abs(right_leg_ang_vel).mean(
-                #     dim=[1, 2])  # Mean angular velocity for the right leg
-                #
-                # # Combine rewards
-                # llm_rewards = (
-                #         left_lean_pelvis_reward
-                #         + left_lean_torso_reward
-                #         + normalized_kick_height_reward
-                #         + normalized_kick_side_reward
-                #         - smooth_motion_penalty * 0.2  # Weight penalty to avoid jerky kicks
-                # )
-
-                # # ==================  V shape  ==================
-                # body_pos = infos['state_embeds'][:, :15, :3]  # [num, 15, 3]
-                # body_rot = infos['state_embeds'][:, :15, 3:7]  # [num, 15, 4]
-                # body_vel = infos['state_embeds'][:, :15, 7:10]  # [num, 15, 3]
-                # body_ang_vel = infos['state_embeds'][:, :15, 10:13]  # [num, 15, 3]
-                #
-                # # Defining temperature parameters for transformations
-                # stability_temp = 0.1
-                # arm_position_temp = 0.1
-                #
-                # # Reward for keeping pelvis stable (standing still)
-                # pelvis_pos = body_pos[:, 0, :]  # pelvis position
-                # pelvis_vel = body_vel[:, 0, :]  # pelvis velocity
-                # stability_reward = torch.exp(-stability_temp * torch.norm(pelvis_vel, dim=-1))
-                #
-                # # Reward for arms forming a 'V' shape
-                # right_upper_arm_pos = body_pos[:, 3, :]  # right upper arm position
-                # left_upper_arm_pos = body_pos[:, 6, :]  # left upper arm position
-                #
-                # # Desired target positions for 'V' shape
-                # v_arm_angle_rad = torch.tensor(45.0 * 3.1415 / 180.0).to(self.device)  # 45-degree angle for V shape
-                # right_target_pos = torch.tensor([0.5, -0.5, 1.5]).to(self.device)  # approximate position for right arm in 'V'
-                # left_target_pos = torch.tensor([0.5, 0.5, 1.5]).to(self.device)  # approximate position for left arm in 'V'
-                #
-                # # Calculate the reward based on how close the arms are to target 'V' positions
-                # right_arm_diff = torch.norm(right_upper_arm_pos - right_target_pos, dim=-1)
-                # left_arm_diff = torch.norm(left_upper_arm_pos - left_target_pos, dim=-1)
-                # arm_position_reward = torch.exp(-arm_position_temp * (right_arm_diff + left_arm_diff))
-                #
-                # # Total reward calculation
-                # llm_rewards = stability_reward + arm_position_reward
-
                 # # ==================  conduct orchestra  ==================
                 # body_pos = infos['state_embeds'][:, :15, :3]  # [num_envs, 15, 3]
                 # body_rot = infos['state_embeds'][:, :15, 3:7]  # [num_envs, 15, 4]
@@ -578,10 +407,6 @@ class SpecAnyskillAgent(common_agent.CommonAgent):
                 )
 
 
-                # # ==================  mimimi  ==================
-                # llm_rewards = 0
-
-
             if self.RENDER:
                 if self.headless == False:
                     images = self.vec_env.env.task.render_img()
@@ -642,7 +467,11 @@ class SpecAnyskillAgent(common_agent.CommonAgent):
 
             # together
             # curr_rewards = llm_rewards
-            curr_rewards = llm_rewards + anyskill_rewards
+
+            if self.LLM:
+                curr_rewards = llm_rewards + anyskill_rewards
+            else:
+                curr_rewards = anyskill_rewards
 
 
             # only model
