@@ -1,0 +1,7 @@
+torch==1.13.1
+numpy==1.21.1
+termcolor==1.1.0
+rl-games==1.1.4
+tensorboard==2.11.2
+open_clip_torch==2.5.0
+python==3.7.12
