@@ -38,10 +38,10 @@
 
 
 ## TODOs
-- [x] Release initial structure of the code.
-- [x] Release the training data of low-level controller.
+- [x] Release training and inference code of Pose2CLIP.
 - [x] Release well-trained model of Pose2CLIP.
-- [ ] Release training code.
+- [x] Release the training data of low-level controller.
+- [ ] Release training code of basic RL agents.
 
 
 ### Installation
