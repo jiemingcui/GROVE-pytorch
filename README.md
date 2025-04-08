@@ -1,8 +1,12 @@
-# GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill (CVPR 2025)
+# GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill (CVPR 2025 Oral)
 <p align="left">
+    <a href='https://arxiv.org/abs/2504.04191'>
+      <img src='https://img.shields.io/badge/Paper-arXiv-red?style=plastic&logo=arXiv&logoColor=red' alt='Paper arXiv'>
+    </a>
     <a href='https://jiemingcui.github.io/grove/'>
       <img src='https://img.shields.io/badge/Project-Page-blue?style=plastic&logo=Google%20chrome&logoColor=blue' alt='Project Page'>
     </a>
+
 
 [//]: # (    <a href='https://www.youtube.com/watch?v=QojOdY2_dTQ'>)
 
@@ -15,11 +19,7 @@
 [//]: # (      <img src='https://img.shields.io/badge/Data-Drive-green?style=plastic&logo=Google%20Drive&logoColor=green' alt='Checkpoints'>)
 
 [//]: # (    </a>)
-[//]: # (    <a href='https://arxiv.org/abs/2403.12835'>)
 
-[//]: # (      <img src='https://img.shields.io/badge/Paper-arXiv-red?style=plastic&logo=arXiv&logoColor=red' alt='Paper arXiv'>)
-
-[//]: # (    </a>)
 
 
 [//]: # (    <a href='https://drive.google.com/file/d/1jeFta3iTT7E_m43GpC35FPtE9PdIxdcX/view?usp=sharing'>)
