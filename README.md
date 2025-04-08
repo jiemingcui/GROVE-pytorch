@@ -1,4 +1,4 @@
-# GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill (CVPR 2025 Oral)
+# GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill (CVPR 2025)
 <p align="left">
     <a href='https://arxiv.org/abs/2504.04191'>
       <img src='https://img.shields.io/badge/Paper-arXiv-red?style=plastic&logo=arXiv&logoColor=red' alt='Paper arXiv'>
